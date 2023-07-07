@@ -1,0 +1,99 @@
+/* global styles */
+html,
+body {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+}
+
+/* non-map elements */
+h1 {
+  font-weight: 800;
+}
+
+p {
+  line-height: 1.7rem;
+  font-weight: 200;
+  font-size: 1.3rem;
+}
+
+li {
+  font-size: 1rem;
+  margin: 5px;
+}
+
+/* map */
+#map {
+  height: calc(100vh - 72px);
+}
+
+/* legend */
+.legend {
+  font-size: 1rem;
+  border-radius: 5px;
+  background: rgba(100, 100, 100, 0.9);
+  color: rgba(244, 244, 244, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  padding: 6px 6px;
+}
+
+.legend h3 {
+  font-size: 1.1em;
+  margin: 0 0 10px 0;
+  font-weight: bold;
+  line-height: 1em;
+  color: whitesmoke;
+}
+
+.legend span {
+  width: 20px;
+  height: 20px;
+  margin: 0 10px 4px 0;
+  padding: 2px;
+}
+
+.legend li {
+  list-style-type: none;
+  font-size: 1.2em;
+  margin: 6px 2px;
+}
+
+/* slider */
+label {
+  color: white;
+  font-size: 1.1rem;
+}
+
+#ui-controls {
+  font-family: Lato, sans-serif;
+  width: 176px;
+  padding: 8px 25px 8px 15px;
+  background: rgba(75, 75, 75, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: whitesmoke;
+}
+
+#ui-controls .min {
+  float: left;
+}
+
+#ui-controls .max {
+  float: right;
+  margin-right: -15px;
+}
+
+/* Small devices */
+@media (max-width: 500px) {
+  .legend {
+    font-size: 0.8rem;
+  }
+
+  #ui-controls {
+    font-size: 0.7rem;
+    width: 50%;
+  }
+
+  #ui-controls input {
+    width: 90%;
+  }
+}
