@@ -85,12 +85,13 @@ label {
 /* Small devices */
 @media (max-width: 500px) {
   .legend {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   #ui-controls {
     font-size: 0.7rem;
     width: 50%;
+    margin-bottom: 5%;
   }
 
   #ui-controls input {

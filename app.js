@@ -131,7 +131,13 @@ function updateMap(dataLayer, currentYear) {
 }
 
 function createSliderUI(dataLayer) {
-  const sliderControl = L.control({ position: "topright" });
+  let sliderControl;
+  if (windowWidth > 500) {
+    sliderControl = L.control({ position: "topright" });
+  } else {
+    sliderControl = L.control({ position: "bottomright" });
+  }
+  
   sliderControl.onAdd = function (map) {
     const slider = L.DomUtil.get("ui-controls");
     // disable scrolling of map while using controls
