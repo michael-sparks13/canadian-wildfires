@@ -62,7 +62,7 @@ fetch("data/simple2012-2021.geojson")
   .then(function (fires) {
     drawMap(fires);
     //fetch data for 2023 fires
-    return fetch("data/simple2023.geojson");
+    return fetch("data/2023perimeters_904.geojson");
   })
   .then(function (response) {
     return response.json();
@@ -104,7 +104,8 @@ function drawAnotherLayer(recentFires) {
       //set 2023 fires with unique color
       return {
         color: color2023,
-        fillOpacity: 1,
+        fillOpacity: 0.7,
+        stroke: false,
         fillColor: color2023,
       };
     },
@@ -123,7 +124,7 @@ function updateMap(dataLayer, currentYear) {
     } else {
       layer.setStyle({
         opacity: 1,
-        fillOpacity: 1,
+        fillOpacity: 0.4,
         color: currentColor,
       });
     }
