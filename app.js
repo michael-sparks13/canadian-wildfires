@@ -17,10 +17,13 @@ const options = {
   zoom: setInitialMapZoom(windowWidth),
 };
 
-// vars for year+color
+//vars for year+color
 let currentYear = 2012;
 const currentColor = "#009E41";
 const color2023 = "#EA17EA";
+
+//var for 2023acres
+let acres_2023 = 0;
 
 //create map
 const map = L.map("map", options);
@@ -55,7 +58,7 @@ const labels = L.tileLayer(
 ).addTo(map);
 
 //fetch data for historical fires
-fetch("data/simple2012-2021.geojson")
+fetch("data/simple-2012-2021-area-only.geojson")
   .then(function (response) {
     return response.json();
   })
@@ -110,6 +113,16 @@ function drawAnotherLayer(recentFires) {
       };
     },
   }).addTo(map);
+
+  dataLayer.eachLayer((l) => {
+    const area = l.feature.properties.AREA;
+    console.log(area);
+    acres_2023 += area;
+  });
+  acres_2023 = ((acres_2023 * 2.47) / 1000000).toFixed(2);
+
+  let year2023 = document.querySelector("#year2023");
+  year2023.innerHTML += `<span>${acres_2023} M</span>`;
 } //end drawAnotherLayer function
 
 //draw yearly layer on slider event
@@ -123,9 +136,10 @@ function updateMap(dataLayer, currentYear) {
       });
     } else {
       layer.setStyle({
-        opacity: 1,
-        fillOpacity: 0.4,
+        fillOpacity: 0.7,
+        stroke: false,
         color: currentColor,
+        fillColor: currentColor,
       });
     }
   });
@@ -138,7 +152,7 @@ function createSliderUI(dataLayer) {
   } else {
     sliderControl = L.control({ position: "bottomright" });
   }
-  
+
   sliderControl.onAdd = function (map) {
     const slider = L.DomUtil.get("ui-controls");
     // disable scrolling of map while using controls
@@ -178,10 +192,10 @@ function drawLegend() {
   // select div and create legend title
   const legend = document.querySelector(".legend");
   //add legend details
-  legend.innerHTML = "<h3>Area Burned</h3>";
+  legend.innerHTML = "<h3>Acres Burned</h3>";
   legend.innerHTML += `<li><span id=currentYear style="background:${currentColor}">${currentYear}</span>
         </li>`;
-  legend.innerHTML += `<li><span style="background:${color2023}">2023</span>
+  legend.innerHTML += `<li id=year2023><span style="background:${color2023}">2023</span>
         </li>`;
 }
 
