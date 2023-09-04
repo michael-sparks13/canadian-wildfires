@@ -13,7 +13,7 @@ let windowWidth =
 const options = {
   zoomSnap: 0.1,
   zoomControl: false,
-  center: [49.677662902665546, -79.53282086743701],
+  center: [58.677662902665546, -100.53282086743701],
   zoom: setInitialMapZoom(windowWidth),
 };
 
@@ -83,6 +83,7 @@ function drawMap(fires) {
   const dataLayer = L.geoJson(fires, {
     style: function (feature) {
       //only show one year at a time
+      console.log('year', feature.properties.YEAR);
       if (feature.properties.YEAR != currentYear) {
         return {
           opacity: 0,
@@ -95,6 +96,7 @@ function drawMap(fires) {
       }
     },
   }).addTo(map);
+  console.log("fires", dataLayer);
 
   //draw layer, then add slider
   createSliderUI(dataLayer);
@@ -116,10 +118,9 @@ function drawAnotherLayer(recentFires) {
 
   dataLayer.eachLayer((l) => {
     const area = l.feature.properties.AREA;
-    console.log(area);
     acres_2023 += area;
   });
-  acres_2023 = ((acres_2023 * 2.47) / 1000000).toFixed(2);
+  acres_2023 = ((acres_2023 * 2.47105) / 1000000).toFixed(2);
 
   let year2023 = document.querySelector("#year2023");
   year2023.innerHTML += `<span>${acres_2023} M</span>`;
@@ -209,9 +210,9 @@ function setInitialMapZoom(windowWidth) {
   let mapZoom;
   // test for various browser widths
   if (windowWidth < 500) {
-    mapZoom = 4.1;
+    mapZoom = 2.1;
   } else {
-    mapZoom = 6.1;
+    mapZoom = 4.1;
   }
   return mapZoom;
 } //end setInitialMapZoom
