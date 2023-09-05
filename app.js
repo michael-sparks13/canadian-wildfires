@@ -215,8 +215,7 @@ function updateLegend(currentYear, dataLayer) {
   document.querySelector("#currentYear").innerHTML = currentYear;
   let currentYearElement = document.querySelector("#pastYear");
   let acresPast = document.querySelector("#acresPast");
-  acresPast.innerHTML = "";
-
+  
   //filter dataLayer for currentYear
   dataLayer.eachLayer(function (l) {
     const props = l.feature.properties;
@@ -224,11 +223,12 @@ function updateLegend(currentYear, dataLayer) {
       acres_past += props.AREA;
     }
   });
-  console.log("ap", acres_past);
+  //console.log("ap", acres_past);
 
   //add acres for currentYear to legend
   acres_past = ((acres_past * 2.47105) / 1000000).toFixed(2);
   currentYearElement.innerHTML += `<span>${acres_past} M</span>`;
+  acresPast.innerHTML = "";
 } //end updateLegend
 
 function setInitialMapZoom(windowWidth) {
