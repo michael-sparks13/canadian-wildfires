@@ -13,7 +13,7 @@ let windowWidth =
 const options = {
   zoomSnap: 0.1,
   zoomControl: false,
-  center: [58.677662902665546, -100.53282086743701],
+  center: [57.677662902665546, -100.53282086743701],
   zoom: setInitialMapZoom(windowWidth),
 };
 
@@ -22,8 +22,9 @@ let currentYear = 2012;
 const currentColor = "#009E41";
 const color2023 = "#EA17EA";
 
-//var for 2023acres
+//var for acres
 let acres_2023 = 0;
+let acres_past = 0;
 
 //create map
 const map = L.map("map", options);
@@ -83,7 +84,6 @@ function drawMap(fires) {
   const dataLayer = L.geoJson(fires, {
     style: function (feature) {
       //only show one year at a time
-      console.log('year', feature.properties.YEAR);
       if (feature.properties.YEAR != currentYear) {
         return {
           opacity: 0,
@@ -96,7 +96,6 @@ function drawMap(fires) {
       }
     },
   }).addTo(map);
-  console.log("fires", dataLayer);
 
   //draw layer, then add slider
   createSliderUI(dataLayer);
@@ -110,7 +109,7 @@ function drawAnotherLayer(recentFires) {
       return {
         color: color2023,
         fillOpacity: 0.7,
-        stroke: false,
+        opacity: 0.7,
         fillColor: color2023,
       };
     },
@@ -138,7 +137,7 @@ function updateMap(dataLayer, currentYear) {
     } else {
       layer.setStyle({
         fillOpacity: 0.7,
-        stroke: false,
+        opacity: 0.7,
         color: currentColor,
         fillColor: currentColor,
       });
@@ -169,16 +168,29 @@ function createSliderUI(dataLayer) {
   slider.addEventListener("input", function (e) {
     // get the value of the selected option
     const currentYear = e.target.valueAsNumber;
+
+    // const filterLayer = L.geoJson(dataLayer, {
+    //   filter: function (feature) {
+    //     // console.log('feature', feature.layer.feature.properties)
+    //     feature.eachLayer(function (l) {
+    //       console.log(l.feature.properties);
+    //       if (l.feature.properties.YEAR == currentYear) {
+    //         return l;
+    //       }
+    //     });
+    //     return feature;
+    //   },
+    // });
     // update the map with current timestamp
-    updateMap(dataLayer, currentYear);
     // update timestamp in legend heading
+    console.log("data", dataLayer);
     updateLegend(currentYear);
   });
 
-  drawLegend();
+  drawLegend(dataLayer);
 } //end sliderUI
 
-function drawLegend() {
+function drawLegend(dataLayer) {
   const legendControl = L.control({
     position: "topright",
   });
@@ -194,10 +206,24 @@ function drawLegend() {
   const legend = document.querySelector(".legend");
   //add legend details
   legend.innerHTML = "<h3>Acres Burned</h3>";
-  legend.innerHTML += `<li><span id=currentYear style="background:${currentColor}">${currentYear}</span>
+  legend.innerHTML += `<li id=pastYear><span id=currentYear style="background:${currentColor}">${currentYear}</span>
         </li>`;
   legend.innerHTML += `<li id=year2023><span style="background:${color2023}">2023</span>
         </li>`;
+
+  // acres_past += layer.feature.properties.AREA;
+  // acres_past = ((acres_past * 2.47105) / 1000000).toFixed(2);
+
+  dataLayer.eachLayer(function (l) {
+    const props = l.feature.properties;
+    if (props.YEAR == currentYear) {
+      acres_past += props.AREA;
+    }
+  });
+
+  acres_past = ((acres_past * 2.47105) / 1000000).toFixed(2);
+  let currentYearElement = document.querySelector("#pastYear");
+  currentYearElement.innerHTML += `<span>${acres_past} M</span>`;
 }
 
 //update legend timestamp on slide event
@@ -210,9 +236,9 @@ function setInitialMapZoom(windowWidth) {
   let mapZoom;
   // test for various browser widths
   if (windowWidth < 500) {
-    mapZoom = 2.1;
+    mapZoom = 3;
   } else {
-    mapZoom = 4.1;
+    mapZoom = 4.3;
   }
   return mapZoom;
 } //end setInitialMapZoom
