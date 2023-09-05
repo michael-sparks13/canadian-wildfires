@@ -24,6 +24,7 @@ const color2023 = "#EA17EA";
 
 //var for acres
 let acres_2023 = 0;
+let acres_2012 = 0;
 let acres_past = 0;
 
 //create map
@@ -200,19 +201,23 @@ function drawLegend(dataLayer) {
   dataLayer.eachLayer(function (l) {
     const props = l.feature.properties;
     if (props.YEAR == currentYear) {
-      acres_past += props.AREA;
+      acres_2012 += props.AREA;
+      
     }
   });
 
   //add acres for 2012 to legend
-  acres_past = ((acres_past * 2.47105) / 1000000).toFixed(2);
+  acres_2012 = ((acres_2012 * 2.47105) / 1000000).toFixed(2);
   let currentYearElement = document.querySelector("#pastYear");
-  currentYearElement.innerHTML += `<span id=acresPast>${acres_past} M</span>`;
+  currentYearElement.innerHTML += `<span id=acresPast>${acres_2012} M</span>`;
 }
 
-//update legend timestamp on slide event
+//update legend timestamp & acerage on slide event
 function updateLegend(currentYear, dataLayer) {
+  //update legend timestamp
   document.querySelector("#currentYear").innerHTML = currentYear;
+
+  //update acerage
   let currentYearElement = document.querySelector("#pastYear");
   let acresPastElement = document.querySelector("#acresPast");
 
@@ -223,10 +228,11 @@ function updateLegend(currentYear, dataLayer) {
       acres_past += props.AREA;
     }
   });
-  //console.log("ap", acres_past);
-
+  
   //add acres for currentYear to legend
-  acres_past = ((acres_past * 2.47105) / 1000000).toFixed(2);
+  //following line somehow turns acres_past into a string?  
+  //need to wrap in Number()
+  acres_past = Number(((acres_past * 2.47105) / 1000000).toFixed(2));
   acresPastElement.innerHTML = `<span id=acresPast>${acres_past} M</span>`;
 } //end updateLegend
 
