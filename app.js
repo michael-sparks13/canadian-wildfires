@@ -4,7 +4,7 @@ const button = document.querySelector("#button");
 const h1 = document.querySelector("h1");
 
 // browser window width
-let windowWidth =
+const windowWidth =
   window.innerWidth ||
   document.documentElement.clientWidth ||
   document.body.clientWidth;
@@ -241,7 +241,7 @@ function setInitialMapZoom(windowWidth) {
   let mapZoom;
   // test for various browser widths
   if (windowWidth < 500) {
-    mapZoom = 3;
+    mapZoom = 2.8;
   } else {
     mapZoom = 4.3;
   }
