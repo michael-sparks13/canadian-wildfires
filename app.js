@@ -93,6 +93,8 @@ function drawMap(fires) {
       } else if (feature.properties.YEAR == currentYear) {
         return {
           color: currentColor,
+          fillColor: currentColor,
+          fillOpacity: 0.7,
         };
       }
     },
@@ -109,7 +111,7 @@ function drawAnotherLayer(recentFires) {
       //set 2023 fires with unique color
       return {
         fillOpacity: 0.7,
-        stroke: false,
+        color: color2023,
         fillColor: color2023,
       };
     },
@@ -127,18 +129,19 @@ function drawAnotherLayer(recentFires) {
 
 //draw yearly layer on slider event
 function updateMap(dataLayer, currentYear) {
-  dataLayer.eachLayer(function (layer) {
-    let props = layer.feature.properties.YEAR;
+  dataLayer.eachLayer(function (l) {
+    let props = l.feature.properties.YEAR;
     if (props != currentYear) {
-      layer.setStyle({
+      l.setStyle({
         opacity: 0,
         fillOpacity: 0,
       });
-    } else {
-      layer.setStyle({
+    } else if (props == currentYear) {
+      l.setStyle({
         fillOpacity: 0.7,
-        stroke: false,
+        color: currentColor,
         fillColor: currentColor,
+        opacity: 1
       });
     }
   });
@@ -200,7 +203,6 @@ function drawLegend(dataLayer) {
     const props = l.feature.properties;
     if (props.YEAR == currentYear) {
       acres_2012 += props.AREA;
-      
     }
   });
 
@@ -215,7 +217,6 @@ function updateLegend(currentYear, dataLayer) {
   //update legend timestamp
   document.querySelector("#currentYear").innerHTML = currentYear;
   updateMap(dataLayer, currentYear);
-  console.log('cy', currentYear)
   //update acerage
   let currentYearElement = document.querySelector("#pastYear");
   let acresPastElement = document.querySelector("#acresPast");
@@ -227,9 +228,9 @@ function updateLegend(currentYear, dataLayer) {
       acres_past += props.AREA;
     }
   });
-  
+
   //add acres for currentYear to legend
-  //following line somehow turns acres_past into a string?  
+  //following line somehow turns acres_past into a string?
   //need to wrap in Number()
   acres_past = Number(((acres_past * 2.47105) / 1000000).toFixed(2));
   acresPastElement.innerHTML = `<span id=acresPast>${acres_past} M</span>`;
