@@ -60,7 +60,7 @@ const labels = L.tileLayer(
 ).addTo(map);
 
 //fetch data for historical fires
-fetch("data/no_shapes_2012-2021-area-only.geojson")
+fetch("data/12-21-simple.geojson")
   .then(function (response) {
     return response.json();
   })
@@ -216,7 +216,8 @@ function drawLegend(dataLayer) {
 function updateLegend(currentYear, dataLayer) {
   //update legend timestamp
   document.querySelector("#currentYear").innerHTML = currentYear;
-
+  updateMap(dataLayer, currentYear);
+  console.log('cy', currentYear)
   //update acerage
   let currentYearElement = document.querySelector("#pastYear");
   let acresPastElement = document.querySelector("#acresPast");
