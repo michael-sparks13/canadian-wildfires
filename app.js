@@ -148,12 +148,9 @@ function updateMap(dataLayer, currentYear) {
 }
 
 function createSliderUI(dataLayer) {
-  let sliderControl;
-  if (windowWidth > 500) {
-    sliderControl = L.control({ position: "topright" });
-  } else {
-    sliderControl = L.control({ position: "bottomright" });
-  }
+   drawLegend(dataLayer);
+  let sliderControl = L.control({ position: "topright" });
+
 
   sliderControl.onAdd = function (map) {
     const slider = L.DomUtil.get("ui-controls");
@@ -174,7 +171,7 @@ function createSliderUI(dataLayer) {
     updateLegend(currentYear, dataLayer);
   });
 
-  drawLegend(dataLayer);
+ 
 } //end sliderUI
 
 function drawLegend(dataLayer) {
@@ -210,7 +207,7 @@ function drawLegend(dataLayer) {
   acres_2012 = ((acres_2012 * 2.47105) / 1000000).toFixed(2);
   let currentYearElement = document.querySelector("#pastYear");
   currentYearElement.innerHTML += `<span id=acresPast>${acres_2012} M</span>`;
-}
+} //end drawLegend
 
 //update legend timestamp & acerage on slide event
 function updateLegend(currentYear, dataLayer) {

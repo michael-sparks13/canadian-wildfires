@@ -103,5 +103,10 @@ label {
     height: 100%;
   }
 
-
+  input[type="range"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 16px;
+  }
 }
