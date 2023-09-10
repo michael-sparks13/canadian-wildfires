@@ -110,7 +110,7 @@ function drawAnotherLayer(recentFires) {
     style: function (feature) {
       //set 2023 fires with unique color
       return {
-        fillOpacity: 0.7,
+        fillOpacity: 1,
         color: color2023,
         fillColor: color2023,
       };
@@ -138,7 +138,7 @@ function updateMap(dataLayer, currentYear) {
       });
     } else if (props == currentYear) {
       l.setStyle({
-        fillOpacity: 0.7,
+        fillOpacity: 0.5,
         color: currentColor,
         fillColor: currentColor,
         opacity: 1

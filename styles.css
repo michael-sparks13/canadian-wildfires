@@ -81,6 +81,31 @@ label {
   float: right;
 }
 
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 15px;
+  background: #d3d3d3;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #009e41;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #009e41;
+}
+
 /* Small devices */
 @media (max-width: 500px) {
   .legend {
@@ -102,18 +127,4 @@ label {
     width: 100%;
     height: 100%;
   }
-/* Track: webkit browsers */
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 15px;
-  background: #ccc;
-  border-radius: 16px;
-}
-
-/* Track: Mozilla Firefox */
-input[type="range"]::-moz-range-track {
-  height: 15px;
-  background: #ccc;
-  border-radius: 16px;
-}
-
 }
