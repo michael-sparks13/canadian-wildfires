@@ -17,14 +17,28 @@ const options = {
   zoom: setInitialMapZoom(windowWidth),
 };
 
+const acres = {
+  "2012": 4.19,
+  "2013":10.36,
+  "2014":9.54,
+  "2015":8.32,
+  "2016":3.02,
+  "2017":7.57,
+  "2018":4.66,
+  "2019":4.05,
+  "2020":0.54,
+  "2021":9.68
+
+}
+
 //vars for year+color
 let currentYear = 2012;
 const currentColor = "#009E41";
 const color2023 = "#EA17EA";
 
 //var for acres
-let acres_2023 = 0;
-let acres_2012 = 0;
+const acres_2023 = 40.13;
+const acres_2012 = 4.19;
 let acres_past = 0;
 
 //create map
@@ -117,12 +131,6 @@ function drawAnotherLayer(recentFires) {
     },
   }).addTo(map);
 
-  dataLayer.eachLayer((l) => {
-    const area = l.feature.properties.AREA;
-    acres_2023 += area;
-  });
-  acres_2023 = ((acres_2023 * 2.47105) / 1000000).toFixed(2);
-
   let year2023 = document.querySelector("#year2023");
   year2023.innerHTML += `<span>${acres_2023} M</span>`;
 } //end drawAnotherLayer function
@@ -196,15 +204,7 @@ function drawLegend(dataLayer) {
         </li>`;
 
   //calculate acres for 2012 on map load
-  dataLayer.eachLayer(function (l) {
-    const props = l.feature.properties;
-    if (props.YEAR == currentYear) {
-      acres_2012 += props.AREA;
-    }
-  });
-
-  //add acres for 2012 to legend
-  acres_2012 = ((acres_2012 * 2.47105) / 1000000).toFixed(2);
+  
   let currentYearElement = document.querySelector("#pastYear");
   currentYearElement.innerHTML += `<span id=acresPast>${acres_2012} M</span>`;
 } //end drawLegend
@@ -218,19 +218,7 @@ function updateLegend(currentYear, dataLayer) {
   let currentYearElement = document.querySelector("#pastYear");
   let acresPastElement = document.querySelector("#acresPast");
 
-  //filter dataLayer for currentYear
-  dataLayer.eachLayer(function (l) {
-    const props = l.feature.properties;
-    if (props.YEAR == currentYear) {
-      acres_past += props.AREA;
-    }
-  });
-
-  //add acres for currentYear to legend
-  //following line somehow turns acres_past into a string?
-  //need to wrap in Number()
-  acres_past = Number(((acres_past * 2.47105) / 1000000).toFixed(2));
-  acresPastElement.innerHTML = `<span id=acresPast>${acres_past} M</span>`;
+  acresPastElement.innerHTML = `<span id=acresPast>${acres[currentYear]} M</span>`;
 } //end updateLegend
 
 function setInitialMapZoom(windowWidth) {
