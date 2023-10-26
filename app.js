@@ -33,7 +33,7 @@ const acres = {
 
 //vars for year+color
 let currentYear = 2012;
-const currentColor = "#009E41";
+const currentColor = "#018236";
 const color2023 = "#EA17EA";
 
 //var for acres
@@ -43,23 +43,29 @@ let acres_past = 0;
 
 //create map
 const map = L.map("map", options);
+ const key = "R5Js2wLegZ6GMYd5iN2E";
 
 //create panes
 map.createPane("labels");
 map.getPane("labels").style.zIndex = 404;
 
 // request tiles and add to map
-const tiles = L.tileLayer(
-  "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}",
-  {
-    minZoom: 0,
-    maxZoom: 20,
-    attribution:
-      '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    ext: "png",
-    opacity: 0.6
-  }
-).addTo(map);
+const mtLayer = L.maptilerLayer({
+  apiKey: key,
+  style: L.MaptilerStyle.DATAVIZ, //optional
+}).addTo(map);
+
+// const tiles = L.tileLayer(
+//   "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}",
+//   {
+//     minZoom: 0,
+//     maxZoom: 20,
+//     attribution:
+//       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//     ext: "png",
+//     opacity: 0.6
+//   }
+// ).addTo(map);
 
 //fetch data for historical fires
 fetch("data/12-21-simple.geojson")
