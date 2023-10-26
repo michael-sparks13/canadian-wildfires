@@ -50,26 +50,14 @@ map.getPane("labels").style.zIndex = 404;
 
 // request tiles and add to map
 const tiles = L.tileLayer(
-  "https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/{y}{r}.png?api_key=958678d0-3d40-4504-83b1-a9a9a3f56b9d",
+  "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}",
   {
+    minZoom: 0,
+    maxZoom: 20,
     attribution:
-      '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a> contributors',
-    subdomains: "abcd",
+      '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     ext: "png",
-    opacity: 0.1,
-  }
-).addTo(map);
-
-// Stamen toner labels
-const labels = L.tileLayer(
-  "https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}{r}.png",
-  {
-    attribution:
-      'Map tiles by <a href="https://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    subdomains: "abcd",
-    ext: "png",
-    pane: "labels",
-    opacity: 0.3,
+    opacity: 0.6
   }
 ).addTo(map);
 
