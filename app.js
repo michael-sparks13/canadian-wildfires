@@ -52,20 +52,9 @@ map.getPane("labels").style.zIndex = 404;
 // request tiles and add to map
 const mtLayer = L.maptilerLayer({
   apiKey: key,
-  style: L.MaptilerStyle.DATAVIZ, //optional
+  style: L.MaptilerStyle.DATAVIZ.LIGHT, 
 }).addTo(map);
 
-// const tiles = L.tileLayer(
-//   "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}",
-//   {
-//     minZoom: 0,
-//     maxZoom: 20,
-//     attribution:
-//       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-//     ext: "png",
-//     opacity: 0.6
-//   }
-// ).addTo(map);
 
 //fetch data for historical fires
 fetch("data/12-21-simple.geojson")
@@ -102,7 +91,7 @@ function drawMap(fires) {
         return {
           color: currentColor,
           fillColor: currentColor,
-          fillOpacity: 0.7,
+          fillOpacity: 1,
         };
       }
     },
@@ -118,7 +107,7 @@ function drawAnotherLayer(recentFires) {
     style: function (feature) {
       //set 2023 fires with unique color
       return {
-        fillOpacity: 1,
+        fillOpacity: 0.7,
         color: color2023,
         fillColor: color2023,
       };
@@ -140,10 +129,10 @@ function updateMap(dataLayer, currentYear) {
       });
     } else if (props == currentYear) {
       l.setStyle({
-        fillOpacity: 0.5,
+        fillOpacity: 0.4,
         color: currentColor,
         fillColor: currentColor,
-        opacity: 1
+        opacity: 0.7
       });
     }
   });
@@ -222,7 +211,7 @@ function setInitialMapZoom(windowWidth) {
   if (windowWidth < 500) {
     mapZoom = 2.8;
   } else {
-    mapZoom = 5;
+    mapZoom = 4.3;
   }
   return mapZoom;
 } //end setInitialMapZoom
